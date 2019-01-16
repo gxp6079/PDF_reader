@@ -41,9 +41,9 @@ public class Field {
             String row = rows[i];
             strings.add(i, row.split(" "));
         }
-        for(int row = 0 ; row < rows.length ; row ++){
-            for(int col = 0 ; col < strings.size() ; col ++){
-                if(strings.get(col)[row] == value){
+        for(int col = 0 ; col < strings.size() ; col ++){
+            for(int row = 0 ; row < strings.get(col).length; row ++){
+                if(strings.get(col)[row].contains(value)){
                     getCols().add(col);
                     getLines().add(row);
                 }
