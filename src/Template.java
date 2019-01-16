@@ -5,6 +5,7 @@ import org.apache.pdfbox.text.PDFTextStripper;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Template {
@@ -18,6 +19,7 @@ public class Template {
      * @param fields_map
      */
     public Template(String filename, Map<String, String> fields_map){
+        this.fields = new HashMap<>();
         create_Fields(filename, fields_map);
     }
 

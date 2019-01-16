@@ -12,6 +12,8 @@ public class Field {
 
     public Field(String name, String filename, String value){
         this.name = name;
+        this.cols = new ArrayList();
+        this.lines = new ArrayList();
         find(filename, value);
     }
 
