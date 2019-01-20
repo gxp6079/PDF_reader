@@ -14,7 +14,7 @@ public class Field {
         this.name = name;
         this.cols = new ArrayList();
         this.lines = new ArrayList();
-        find(filename, value);
+        init_location(filename, value);
     }
 
     public ArrayList getCols() {
@@ -25,7 +25,7 @@ public class Field {
         return lines;
     }
 
-    public void find(String filename, String value){
+    public void init_location(String filename, String value){
         File file =  new File(filename);
         String text;
         try {

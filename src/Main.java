@@ -21,7 +21,7 @@ public class Main {
      */
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        System.out.println("Insira o nome do document: ");
+        System.out.println("Insira o nome do documento: ");
         String filename;
         filename = scan.next();
         System.out.println("Insira o numero da conta: ");
