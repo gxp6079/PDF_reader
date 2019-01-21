@@ -50,8 +50,7 @@ public class Field {
         String[] rows = text.split("\n");
         ArrayList<String[]> strings = new ArrayList<>();
         for(int i = 0 ; i < rows.length ; i++){
-            String row = rows[i];
-            strings.add(row.split(" "));
+            strings.add(rows[i].split(" "));
         }
         for(int row = 0 ; row < strings.size() ; row ++){
             for(int col = 0 ; col < strings.get(row).length; col ++){
