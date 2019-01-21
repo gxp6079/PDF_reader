@@ -30,6 +30,10 @@ public class Main {
         HashMap<String, String> field_map = new HashMap<>();
         field_map.put("conta", conta);
         Template template = new Template(filename, field_map);
+
+        System.out.println("TEST FIND: DOCUMENT NAME:");
+        filename = scan.next();
+        template.find_values(filename);
     }
 
 }

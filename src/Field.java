@@ -6,14 +6,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Field {
-    private ArrayList lines;
-    private ArrayList cols;
-    private String name;
+    private ArrayList<Integer> lines;
+    private ArrayList<Integer> cols;
+    public final String NAME;
 
     public Field(String name, String filename, String value){
-        this.name = name;
-        this.cols = new ArrayList();
-        this.lines = new ArrayList();
+        this.NAME = name;
+        this.cols = new ArrayList<>();
+        this.lines = new ArrayList<>();
         init_location(filename, value);
     }
 
@@ -23,6 +23,16 @@ public class Field {
 
     public ArrayList getLines() {
         return lines;
+    }
+
+    public String find(ArrayList<String[]> strings) {
+
+        int line_num = lines.get(0);
+        int col_num = cols.get(0);
+
+        String value = strings.get(line_num)[col_num];
+
+        return value;
     }
 
     public void init_location(String filename, String value){
@@ -41,11 +51,11 @@ public class Field {
         ArrayList<String[]> strings = new ArrayList<>();
         for(int i = 0 ; i < rows.length ; i++){
             String row = rows[i];
-            strings.add(i, row.split(" "));
+            strings.add(row.split(" "));
         }
-        for(int col = 0 ; col < strings.size() ; col ++){
-            for(int row = 0 ; row < strings.get(col).length; row ++){
-                if(strings.get(col)[row].contains(value)){
+        for(int row = 0 ; row < strings.size() ; row ++){
+            for(int col = 0 ; col < strings.get(row).length; col ++){
+                if(strings.get(row)[col].contains(value)){
                     getCols().add(col);
                     getLines().add(row);
                 }

@@ -1,4 +1,3 @@
-
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 
@@ -55,6 +54,28 @@ public class Template {
      * @param field_value
      */
     public void updateField(String filename, String field_name, String field_value){
+    }
+
+    public void find_values(String filename) {
+        File file = new File(filename);
+        String text;
+        try {
+            PDDocument document = PDDocument.load(file);
+            PDFTextStripper pdfStripper = new PDFTextStripper();
+            text = pdfStripper.getText(document);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+        String[] rows = text.split("\n");
+        ArrayList<String[]> strings = new ArrayList<>();
+        for (int i = 0; i < rows.length; i++) {
+            strings.add(rows[i].split(" "));
+        }
+        for (Field f : fields.values()) {
+            String value = f.find(strings);
+            System.out.println(f.NAME + ": " + value);
+        }
     }
 
 }
