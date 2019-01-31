@@ -3,9 +3,10 @@ import org.apache.pdfbox.text.PDFTextStripper;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Field {
+public class Field implements Serializable {
     private ArrayList<Integer> lines;
     private ArrayList<Integer> cols;
     public final String NAME;
@@ -31,7 +32,7 @@ public class Field {
 
         for (int i = 1; i < lines.size(); i++) {
             String curr = strings.get(i)[i];
-            String common = "";
+            String common = stringCompare(value, curr);
 
             value = common;
         }
@@ -39,6 +40,44 @@ public class Field {
         //String value = strings.get(line_num)[col_num];
 
         return value;
+    }
+
+
+    public static String stringCompare(String word1, String word2) {
+        if (word1.contains(word2)) {
+            return word2;
+        } else if (word2.contains(word1)) {
+            return word1;
+        }
+
+        int start1 = 0;
+        int end1 = 1;
+        int start2 = word2.length()-1;
+        int end2 = word2.length();
+        int iter = 1;
+
+        String complete = "";
+        while (end2 != 0) {
+            String currMatch = "";
+            String split1 = word1.substring(start1, end1);
+            String split2 = word2.substring(start2, end2);
+            System.out.println(split1);
+            System.out.println(split2 + "\n");
+
+            for (int i = 0; i < split1.length(); i++) {
+                if (split1.charAt(i) == split2.charAt(i)) currMatch += split1.charAt(i);
+            }
+
+            start1 = ((iter >= word1.length()) ? iter - word1.length() : 0);
+            end1 += (iter >= word1.length()) ? 0 : 1;
+            start2 -= (start2 > 0) ? 1 : 0;
+            end2 = word2.length() - (((iter >= word2.length()) ? iter - word2.length() : 0));
+            iter++;
+            complete = (complete.length() > currMatch.length()) ? complete : currMatch;
+        }
+
+
+        return complete;
     }
 
     private void init_location(String filename, String value){

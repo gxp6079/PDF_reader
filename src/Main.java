@@ -6,11 +6,11 @@ public class Main {
     private static HashMap<String, Template> templates;
 
 
-    private static void writeTemplate(Template template){
+    private static void writeTemplate(){
         try{
-            FileOutputStream fos = new FileOutputStream(new File("~/Desktop/Brit/PDF_reader/templates.ser"));
+            FileOutputStream fos = new FileOutputStream(new File("templates.ser"));
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(template);
+            oos.writeObject(templates);
 
             oos.close();
             fos.close();
@@ -20,18 +20,20 @@ public class Main {
         }
     }
 
-    private static void readTemplates(){
+    private static HashMap<String, Template> readTemplates(){
         try {
-            FileInputStream fis =  new FileInputStream(new File("~/Desktop/Brit/PDF_reader/templates.ser"));
+            FileInputStream fis =  new FileInputStream(new File("templates.ser"));
             ObjectInputStream ois = new ObjectInputStream(fis);
 
-            Template temp = (Template) ois.readObject();
-            while(temp != null){
-                templates.put(temp.getType(), temp);
-                temp = (Template) ois.readObject();
-            }
+            // HashMap<String, Template> t = new HashMap<>();
+            HashMap<String, Template> temp = (HashMap<String, Template>) ois.readObject();
+//            while(temp != null){
+//                t.put(temp.getType(), temp);
+//                temp = (Template) ois.readObject();
+//            }
+            return temp;
         } catch (Exception e) {
-            e.printStackTrace();
+            return new HashMap<>();
         }
     }
     /**
@@ -52,8 +54,8 @@ public class Main {
      *      send to DB
      */
     public static void main(String[] args) {
-        templates = new HashMap<>();
-        readTemplates();
+
+        templates = readTemplates();
         Scanner scan = new Scanner(System.in);
         System.out.println("Insira o nome do documento: ");
         String filename = scan.next();
@@ -70,7 +72,7 @@ public class Main {
             field_map.put("conta", conta);
             Template template = new Template(type, filename, field_map);
             templates.put(type, template);
-            writeTemplate(template);
+            writeTemplate();
         }
     }
 
