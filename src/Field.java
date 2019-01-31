@@ -24,13 +24,19 @@ public class Field {
     public ArrayList getLines() {
         return lines;
     }
+    
 
     public String find(ArrayList<String[]> strings) {
+        String value = strings.get(lines.get(0))[cols.get(0)];
 
-        int line_num = lines.get(0);
-        int col_num = cols.get(0);
+        for (int i = 1; i < lines.size(); i++) {
+            String curr = strings.get(i)[i];
+            String common = "";
 
-        String value = strings.get(line_num)[col_num];
+            value = common;
+        }
+
+        //String value = strings.get(line_num)[col_num];
 
         return value;
     }
