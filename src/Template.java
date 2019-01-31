@@ -3,12 +3,14 @@ import org.apache.pdfbox.text.PDFTextStripper;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Template {
+public class Template implements Serializable {
 
+    private String type;
     private Map<String, Field> fields;
 
     /**
@@ -17,7 +19,8 @@ public class Template {
      * @param filename
      * @param fields_map
      */
-    public Template(String filename, Map<String, String> fields_map){
+    public Template(String type, String filename, Map<String, String> fields_map){
+        this.type = type;
         this.fields = new HashMap<>();
         create_Fields(filename, fields_map);
     }
@@ -37,13 +40,9 @@ public class Template {
         return null;
     }
 
-    /**
-     * Method: find
-     * This method finds and returns the field value according to previous file locations
-     * @param filename
-     * @return field_value
-     */
-    public void create_Entry(String filename){}
+    public String getType() {
+        return type;
+    }
 
     /**
      * Method: fix
@@ -54,6 +53,7 @@ public class Template {
      * @param field_value
      */
     public void updateField(String filename, String field_name, String field_value){
+        fields.get(field_name).updateLocation(filename, field_value);
     }
 
     public void find_values(String filename) {

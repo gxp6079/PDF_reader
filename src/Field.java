@@ -17,11 +17,11 @@ public class Field {
         init_location(filename, value);
     }
 
-    public ArrayList getCols() {
+    private ArrayList getCols() {
         return cols;
     }
 
-    public ArrayList getLines() {
+    private ArrayList getLines() {
         return lines;
     }
 
@@ -35,7 +35,7 @@ public class Field {
         return value;
     }
 
-    public void init_location(String filename, String value){
+    private void init_location(String filename, String value){
         File file =  new File(filename);
         String text;
         try {
@@ -55,15 +55,18 @@ public class Field {
         for(int row = 0 ; row < strings.size() ; row ++){
             for(int col = 0 ; col < strings.get(row).length; col ++){
                 if(strings.get(row)[col].contains(value)){
-                    getCols().add(col);
-                    getLines().add(row);
+                    addNew(row, col);
                 }
             }
         }
     }
 
-    public void addNew(int line, int col){
-        lines.add(line);
-        cols.add(col);
+    public void updateLocation(String filename, String value){
+
+    }
+
+    private void addNew(int line, int col){
+       getLines().add(line);
+        getCols().add(col);
     }
 }
