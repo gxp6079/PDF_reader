@@ -31,7 +31,7 @@ public class Field implements Serializable {
         String value = strings.get(lines.get(0))[cols.get(0)];
 
         for (int i = 1; i < lines.size(); i++) {
-            String curr = strings.get(i)[i];
+            String curr = strings.get(lines.get(i))[cols.get(i)];
             String common = stringCompare(value, curr);
 
             value = common;
