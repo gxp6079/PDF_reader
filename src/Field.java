@@ -40,8 +40,6 @@ public class Field implements Serializable {
             value = common;
         }
 
-        //String value = strings.get(line_num)[col_num];
-
         return value;
     }
 

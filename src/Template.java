@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Template implements Serializable {
+public class Template implements Serializable, ITemplate {
 
     private String type;
     private Map<String, Field> fields;
@@ -23,6 +23,12 @@ public class Template implements Serializable {
         this.type = type;
         this.fields = new HashMap<>();
         create_Fields(filename, fields_map);
+    }
+
+
+    @Override
+    public Field add_field(String name, String value) {
+        return null;
     }
 
     /**
@@ -41,7 +47,7 @@ public class Template implements Serializable {
     }
 
     public String getType() {
-        return type;
+        return this.type;
     }
 
     /**

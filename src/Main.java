@@ -25,12 +25,8 @@ public class Main {
             FileInputStream fis =  new FileInputStream(new File("templates.ser"));
             ObjectInputStream ois = new ObjectInputStream(fis);
 
-            // HashMap<String, Template> t = new HashMap<>();
             HashMap<String, Template> temp = (HashMap<String, Template>) ois.readObject();
-//            while(temp != null){
-//                t.put(temp.getType(), temp);
-//                temp = (Template) ois.readObject();
-//            }
+
             return temp;
         } catch (Exception e) {
             return new HashMap<>();
