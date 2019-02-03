@@ -1,35 +1,22 @@
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import java.util.HashMap;
 import java.util.Scanner;
 
 public class Main {
-    private static HashMap<String, Template> templates;
+    private static HashMap<String, SavedTemplate> templates;
 
-
-    private static void writeTemplate(){
-        try{
-            FileOutputStream fos = new FileOutputStream(new File("templates.ser"));
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(templates);
-
-            oos.close();
-            fos.close();
-        }
-        catch (Exception ex){
-            ex.printStackTrace();
-        }
-    }
-
-    private static HashMap<String, Template> readTemplates(){
+    private static SavedTemplate readTemplates(String type){
         try {
-            FileInputStream fis =  new FileInputStream(new File("templates.ser"));
+            FileInputStream fis =  new FileInputStream(new File(type + ".ser"));
             ObjectInputStream ois = new ObjectInputStream(fis);
 
-            HashMap<String, Template> temp = (HashMap<String, Template>) ois.readObject();
+            SavedTemplate temp = (SavedTemplate) ois.readObject();
 
             return temp;
         } catch (Exception e) {
-            return new HashMap<>();
+            return null;
         }
     }
     /**
@@ -51,24 +38,22 @@ public class Main {
      */
     public static void main(String[] args) {
 
-        templates = readTemplates();
         Scanner scan = new Scanner(System.in);
         System.out.println("Insira o nome do documento: ");
         String filename = scan.next();
         System.out.println("Insira o tipo do documento: ");
         String type = scan.next();
-        if(templates.keySet().contains(type)){
-            templates.get(type).find_values(filename);
+        SavedTemplate template = readTemplates(type);
+        if (template != null) {
+            template.find_values(filename);
         }
         else {
             System.out.println("Insira o numero da conta: ");
             String conta;
             conta = scan.next();
-            HashMap<String, String> field_map = new HashMap<>();
-            field_map.put("conta", conta);
-            Template template = new Template(type, filename, field_map);
-            templates.put(type, template);
-            writeTemplate();
+            MakeTemplate makeTemplate = new MakeTemplate(type, filename);
+            makeTemplate.add_field("conta", conta);
+            makeTemplate.save();
         }
     }
 

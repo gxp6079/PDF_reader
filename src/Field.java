@@ -1,8 +1,3 @@
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.text.PDFTextStripper;
-
-import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -14,11 +9,11 @@ public class Field implements Serializable {
     private ArrayList<Integer> cols;
     public final String NAME;
 
-    public Field(String name, String filename, String value){
+    public Field(String name, String value, ArrayList<String[]> file_content){
         this.NAME = name;
         this.cols = new ArrayList<>();
         this.lines = new ArrayList<>();
-        init_location(filename, value);
+        init_location(file_content, value);
     }
 
     private ArrayList getCols() {
@@ -86,26 +81,11 @@ public class Field implements Serializable {
         return complete;
     }
 
-    private void init_location(String filename, String value){
-        File file =  new File(filename);
-        String text;
-        try {
-            PDDocument document = PDDocument.load(file);
-            PDFTextStripper pdfStripper = new PDFTextStripper();
-            text = pdfStripper.getText(document);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
-        String[] rows = text.split("\n");
-        ArrayList<String[]> strings = new ArrayList<>();
-        for(int i = 0 ; i < rows.length ; i++){
-            strings.add(rows[i].split(" "));
-        }
-        for(int row = 0 ; row < strings.size() ; row ++){
-            for(int col = 0 ; col < strings.get(row).length; col ++){
-                if(strings.get(row)[col].contains(value)){
+    private void init_location(ArrayList<String[]> file_content, String value){
+
+        for(int row = 0 ; row < file_content.size() ; row ++){
+            for(int col = 0 ; col < file_content.get(row).length; col ++){
+                if(file_content.get(row)[col].contains(value)){
                     addNew(row, col);
                 }
             }
