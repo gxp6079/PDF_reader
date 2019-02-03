@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 public class Field implements Serializable {
     private ArrayList<Integer> lines;
     private ArrayList<Integer> cols;
