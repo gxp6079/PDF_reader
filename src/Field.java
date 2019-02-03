@@ -25,7 +25,7 @@ public class Field implements Serializable {
     private ArrayList getLines() {
         return lines;
     }
-    
+
 
     public String find(ArrayList<String[]> strings) {
         String value = strings.get(lines.get(0))[cols.get(0)];
@@ -55,23 +55,28 @@ public class Field implements Serializable {
         int start2 = word2.length()-1;
         int end2 = word2.length();
         int iter = 1;
+        int size_min = min(word1.length(), word2.length());
+        int size_max = max(word1.length(), word2.length());
 
         String complete = "";
         while (end2 != 0) {
             String currMatch = "";
             String split1 = word1.substring(start1, end1);
             String split2 = word2.substring(start2, end2);
-            System.out.println(split1);
-            System.out.println(split2 + "\n");
 
             for (int i = 0; i < split1.length(); i++) {
                 if (split1.charAt(i) == split2.charAt(i)) currMatch += split1.charAt(i);
             }
-
-            start1 = ((iter >= word1.length()) ? iter - word1.length() : 0);
+            if(word1.length() > word2.length()){
+                start1 = ((iter >= size_min) ? iter - (size_min - 1) : 0);
+                end2 = word2.length() - (((iter >= size_max) ? iter - (size_max - 1) : 0));
+            }
+            else{
+                start1 = ((iter >= size_max) ? iter - (size_max - 1) : 0);
+                end2 = word2.length() - (((iter >= size_min) ? iter - (size_min - 1) : 0));
+            }
             end1 += (iter >= word1.length()) ? 0 : 1;
             start2 -= (start2 > 0) ? 1 : 0;
-            end2 = word2.length() - (((iter >= word2.length()) ? iter - word2.length() : 0));
             iter++;
             complete = (complete.length() > currMatch.length()) ? complete : currMatch;
         }
