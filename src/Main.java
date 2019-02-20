@@ -48,11 +48,13 @@ public class Main {
             template.find_values(filename);
         }
         else {
-            System.out.println("Insira o numero da conta: ");
-            String conta;
-            conta = scan.next();
             MakeTemplate makeTemplate = new MakeTemplate(type, filename);
-            makeTemplate.add_field("conta", conta);
+            Entry ent = new Entry(false, false, false);
+            for(String item : ent.getItems()){
+                System.out.println("Insira " + item);
+                String toGet = scan.next();
+                makeTemplate.add_field(item, toGet);
+            }
             makeTemplate.save();
         }
     }

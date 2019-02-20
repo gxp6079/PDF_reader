@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 public class Entry {
     private String conta;
     private String nome;
@@ -9,49 +13,33 @@ public class Entry {
     private String valor_bruto;
     private String imposto;
     private String valor_liquido;
+    private  List<String> items;
+    private HashMap<String, Field> fields;
 
-    /**
-     * Constructor, requires all the information that should be present in every document
-     * @param conta
-     * @param nome
-     * @param ativo
-     * @param descricao
-     * @param valor_bruto
-     * @param imposto
-     * @param valor_liquido
-     */
-    public Entry(String conta, String nome, String ativo, String descricao, String valor_bruto, String imposto, String valor_liquido){
-        this.conta = conta;
-        this.nome = nome;
-        this.ativo = ativo;
-        this.descricao = descricao;
-        this.valor_bruto = valor_bruto;
-        this.imposto = imposto;
-        this.valor_liquido = valor_liquido;
+    public Entry(boolean hasDataEmissao, boolean hasDataVencimento,
+                 boolean hasCNPJ){
+        this.items = new ArrayList<>();
+        items.add("conta");
+        items.add("nome");
+        items.add("ativo");
+        items.add("descricao");
+        items.add("valor bruto");
+        items.add("imposto");
+        items.add("valor liquido");
+        if(hasDataEmissao){
+            items.add("Data de emissāo");
+        }
+        if(hasDataVencimento){
+            items.add("Data de vencimento");
+        }
+        if(hasCNPJ){
+            items.add("CNPJ");
+        }
+
     }
 
-    /**
-     * Setter for data_emissao, value that may not be present in some files
-     * @param data_emissao
-     */
-    public void setData_emissao(String data_emissao) {
-        this.data_emissao = data_emissao;
-    }
-
-    /**
-     * Setter for data_vencimento, value that may not be present in some files
-     * @param data_vencimento
-     */
-    public void setData_vencimento(String data_vencimento){
-        this.data_vencimento = data_vencimento;
-    }
-
-    /**
-     * Setter for CNPJ, value that may not be present in some files
-     * @param CNPJ
-     */
-    public void setCNPJ(String CNPJ){
-        this.CNPJ = CNPJ;
+    public List<String> getItems(){
+        return items;
     }
 
     /**
