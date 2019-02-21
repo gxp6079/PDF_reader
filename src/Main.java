@@ -40,9 +40,9 @@ public class Main {
 
         Scanner scan = new Scanner(System.in);
         System.out.println("Insira o nome do documento: ");
-        String filename = scan.next();
+        String filename = scan.nextLine();
         System.out.println("Insira o tipo do documento: ");
-        String type = scan.next();
+        String type = scan.nextLine();
         SavedTemplate template = readTemplates(type);
         if (template != null) {
             template.find_values(filename);
@@ -52,7 +52,7 @@ public class Main {
             Entry ent = new Entry(false, false, false);
             for(String item : ent.getItems()){
                 System.out.println("Insira " + item);
-                String toGet = scan.next();
+                String toGet = scan.nextLine();
                 makeTemplate.add_field(item, toGet);
             }
             makeTemplate.save();
