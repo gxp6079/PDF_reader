@@ -110,7 +110,7 @@ public class Field implements Serializable {
             for(int col = 0 ; col < file_content.get(row).length; col ++){
                 String debug1 = file_content.get(row)[col];
                 String debug2 = words[cur];
-                if (file_content.get(row)[col].equals(words[cur])) {
+                if (file_content.get(row)[col].contains(words[cur])) {
                     if(cur == 0) {
                         cur_col = col;
                     }
