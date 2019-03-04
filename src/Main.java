@@ -50,11 +50,16 @@ public class Main {
         else {
             MakeTemplate makeTemplate = new MakeTemplate(type, filename);
             Entry ent = new Entry(false, false, false);
+            /*
             for(String item : ent.getItems()){
                 System.out.println("Insira " + item);
                 String toGet = scan.nextLine();
                 makeTemplate.add_field(item, toGet);
-            }
+            }*/
+            System.out.println("Insira " + ent.getItems().get(3));
+            String toGet = scan.nextLine();
+            makeTemplate.add_field(ent.getItems().get(3), toGet);
+
             makeTemplate.save();
         }
     }

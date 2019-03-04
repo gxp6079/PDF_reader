@@ -1,5 +1,7 @@
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
@@ -7,12 +9,14 @@ import static java.lang.Math.min;
 public class Field implements Serializable {
     private ArrayList<Integer> lines;
     private ArrayList<Integer> cols;
+    private ArrayList<String> followed;
     public final String NAME;
 
     public Field(String name, String value, ArrayList<String[]> file_content){
         this.NAME = name;
         this.cols = new ArrayList<>();
         this.lines = new ArrayList<>();
+        this.followed = new ArrayList<>();
         init_location(file_content, value);
     }
 
@@ -28,8 +32,25 @@ public class Field implements Serializable {
     public String find(ArrayList<String[]> strings) {
         String value = strings.get(lines.get(0))[cols.get(0)];
 
+        for (int f = cols.get(0) + 1 ; f < strings.get(lines.get(0)).length ; f++){
+            if(!followed.contains(strings.get(lines.get(0))[f])) {
+                value += " " + strings.get(lines.get(0))[f];
+            }
+            else{
+                break;
+            }
+        }
+
         for (int i = 1; i < lines.size(); i++) {
             String curr = strings.get(lines.get(i))[cols.get(i)];
+            for (int f = cols.get(i) ; f < strings.get(lines.get(i)).length ; f++){
+                if(!followed.contains(strings.get(lines.get(i))[f])) {
+                    curr += " " + strings.get(lines.get(i))[f];
+                }
+                else{
+                    break;
+                }
+            }
             String common = stringCompare(value, curr);
 
             value = common;
@@ -82,12 +103,30 @@ public class Field implements Serializable {
     }
 
     private void init_location(ArrayList<String[]> file_content, String value){
-
+        String[] words = value.split(" ");
+        int cur = 0;
+        int cur_col = 0;
         for(int row = 0 ; row < file_content.size() ; row ++){
             for(int col = 0 ; col < file_content.get(row).length; col ++){
-                if(file_content.get(row)[col].contains(value)){
-                    addNew(row, col);
+                String debug1 = file_content.get(row)[col];
+                String debug2 = words[cur];
+                if (file_content.get(row)[col].equals(words[cur])) {
+                    if(cur == 0) {
+                        cur_col = col;
+                    }
+                    cur += 1;
                 }
+                else{
+                    cur = 0;
+                }
+                if(cur == words.length) {
+                    addNew(row, cur_col);
+                    cur = 0;
+                    if(col + 1 < file_content.get(row).length){
+                        followed.add(file_content.get(row)[col + 1]);
+                    }
+                }
+
             }
         }
     }
